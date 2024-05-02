@@ -91,16 +91,15 @@ private extension AmityMessageListComposeBarViewController {
     
     func setupSendMessageButton() {
         sendMessageButton.setTitle(nil, for: .normal)
-        sendMessageButton.setImage(AmityIconSet.iconSendMessage, for: .normal)
         sendMessageButton.isEnabled = false
-        sendMessageButton.isHidden = true
+        sendMessageButton.isHidden = false
     }
     
     func setupShowKeyboardComposeBarButton() {
         showKeyboardComposeBarButton.setTitle(nil, for: .normal)
         showKeyboardComposeBarButton.setImage(AmityIconSet.iconAdd, for: .normal)
         showKeyboardComposeBarButton.tintColor = AmityColorSet.base.blend(.shade1)
-        showKeyboardComposeBarButton.isHidden = false
+        showKeyboardComposeBarButton.isHidden = true
     }
     
     func setupLeftItems() {
@@ -145,8 +144,6 @@ extension AmityMessageListComposeBarViewController: AmityComposeBar {
     
     func updateViewDidTextChanged(_ text: String) {
         sendMessageButton.isEnabled = !text.isEmpty
-        showKeyboardComposeBarButton.isHidden = !text.isEmpty
-        sendMessageButton.isHidden = text.isEmpty
     }
     
     func showRecordButton(show: Bool) {

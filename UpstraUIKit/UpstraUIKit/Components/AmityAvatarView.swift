@@ -72,7 +72,7 @@ public final class AmityAvatarView: AmityImageView {
     
     private func setupView() {
         // We'll hardcode to set background color of avatar
-        backgroundColor = UIColor(hex: "#D9E5FC")
+        backgroundColor = UIColor.green
         avatarShape = .circle
         
         updateAvatarShape()

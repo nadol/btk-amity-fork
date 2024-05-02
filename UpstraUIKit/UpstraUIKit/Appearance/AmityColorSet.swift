@@ -9,6 +9,9 @@
 import UIKit
 
 struct AmityColorSet {
+    static var blue: UIColor {
+        UIColor(red: 57.0 / 255.0, green: 69.0 / 255.0, blue: 111.0 / 255.0, alpha: 1.0)
+    }
     
     static var primary: UIColor {
         return AmityThemeManager.currentTheme.primary
@@ -38,5 +41,7 @@ struct AmityColorSet {
     static var backgroundColor: UIColor {
         return UIColor.white
     }
+
     
+
 }

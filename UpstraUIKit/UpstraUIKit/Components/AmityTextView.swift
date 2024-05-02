@@ -116,7 +116,6 @@ open class AmityTextView: UITextView {
     
     private func commonInit() {
         delegate = self
-        backgroundColor = AmityColorSet.backgroundColor
         textColor = AmityColorSet.base
         setupPlaceholder()
     }

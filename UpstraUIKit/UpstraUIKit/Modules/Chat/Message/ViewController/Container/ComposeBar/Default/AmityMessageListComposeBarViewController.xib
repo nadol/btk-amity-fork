@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AmityMessageListComposeBarViewController" customModule="UpstraUIKit" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AmityMessageListComposeBarViewController" customModule="AmityUIKit" customModuleProvider="target">
             <connections>
                 <outlet property="recordButton" destination="esJ-Dw-sKh" id="IcP-IN-PDZ"/>
                 <outlet property="sendMessageButton" destination="yfB-uX-rGz" id="zSu-TI-Pr0"/>
@@ -32,19 +34,30 @@
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fep-sX-u9j">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
-                                    <color key="backgroundColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" red="0.58431372549019611" green="0.63137254901960782" blue="0.80392156862745101" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="ojO-Q7-Cgc"/>
                                     </constraints>
                                 </view>
-                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="kdj-Df-qWR">
-                                    <rect key="frame" x="16" y="9" width="382" height="43"/>
+                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="kdj-Df-qWR">
+                                    <rect key="frame" x="6" y="9" width="402" height="43"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hq3-Zu-FTO">
-                                            <rect key="frame" x="0.0" y="6.5" width="60" height="30"/>
+                                            <rect key="frame" x="0.0" y="6.6666666666666643" width="90" height="30"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TzW-Ky-Sta">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cRX-2m-HhX">
                                                     <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="30" id="h57-Ef-YQn"/>
+                                                        <constraint firstAttribute="height" constant="30" id="vqQ-iG-XNO"/>
+                                                    </constraints>
+                                                    <state key="normal" image="icon_photo_album"/>
+                                                    <connections>
+                                                        <action selector="toggleDefaultKeyboardAndAudioKeyboardTap:" destination="-1" eventType="touchUpInside" id="Qna-3P-n5z"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TzW-Ky-Sta">
+                                                    <rect key="frame" x="30" y="0.0" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="TIi-7M-l9N"/>
                                                         <constraint firstAttribute="height" constant="30" id="ucf-vE-cjB"/>
@@ -55,7 +68,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IRk-XX-REk">
-                                                    <rect key="frame" x="30" y="0.0" width="30" height="30"/>
+                                                    <rect key="frame" x="60" y="0.0" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="OJ6-JC-K9O"/>
                                                         <constraint firstAttribute="width" constant="30" id="pwj-La-thB"/>
@@ -67,12 +80,20 @@
                                                 </button>
                                             </subviews>
                                         </stackView>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gU0-nB-1dd" customClass="AmityTextComposeBarView" customModule="UpstraUIKit" customModuleProvider="target">
-                                            <rect key="frame" x="68" y="0.0" width="192" height="43"/>
-                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gU0-nB-1dd" customClass="AmityTextComposeBarView" customModule="AmityUIKit" customModuleProvider="target">
+                                            <rect key="frame" x="96" y="0.0" width="178" height="43"/>
+                                            <color key="backgroundColor" red="0.22352941179999999" green="0.27058823529999998" blue="0.43529411759999997" alpha="1" colorSpace="calibratedRGB"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                    <integer key="value" value="4"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="color" keyPath="layer.backgroundColor">
+                                                    <color key="value" red="0.22352941179999999" green="0.27058823529999998" blue="0.43529411759999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
                                         </view>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="esJ-Dw-sKh" customClass="AmityRecordingButton" customModule="UpstraUIKit" customModuleProvider="target">
-                                            <rect key="frame" x="268" y="1.5" width="46" height="40"/>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="esJ-Dw-sKh" customClass="AmityRecordingButton" customModule="AmityUIKit" customModuleProvider="target">
+                                            <rect key="frame" x="280" y="1.6666666666666643" width="56" height="40"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="40" id="AsM-0b-dih"/>
                                             </constraints>
@@ -81,7 +102,7 @@
                                             </connections>
                                         </button>
                                         <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vtv-0T-xxf">
-                                            <rect key="frame" x="322" y="6.5" width="60" height="30"/>
+                                            <rect key="frame" x="342" y="6.6666666666666643" width="60" height="30"/>
                                             <subviews>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DS8-Pz-OBk">
                                                     <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
@@ -94,13 +115,14 @@
                                                         <action selector="showKeyboardComposeBarTap" destination="-1" eventType="touchUpInside" id="n2z-4d-g0d"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yfB-uX-rGz">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yfB-uX-rGz">
                                                     <rect key="frame" x="30" y="0.0" width="30" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="30" id="MKt-g6-QTB"/>
                                                         <constraint firstAttribute="width" constant="30" id="zrw-MU-S6r"/>
                                                     </constraints>
-                                                    <state key="normal" title="SENT"/>
+                                                    <state key="normal" image="icon_send_active"/>
+                                                    <state key="disabled" image="icon_send"/>
                                                     <connections>
                                                         <action selector="sendMessageTap" destination="-1" eventType="touchUpInside" id="mS1-lr-3KY"/>
                                                     </connections>
@@ -108,6 +130,7 @@
                                             </subviews>
                                         </stackView>
                                     </subviews>
+                                    <color key="backgroundColor" red="0.066666666666666666" green="0.16470588235294117" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
                                     <constraints>
                                         <constraint firstItem="gU0-nB-1dd" firstAttribute="top" secondItem="kdj-Df-qWR" secondAttribute="top" id="NgL-0l-Xem"/>
                                         <constraint firstAttribute="bottom" secondItem="gU0-nB-1dd" secondAttribute="bottom" id="TX0-l6-1Z1"/>
@@ -115,14 +138,14 @@
                                 </stackView>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="kdj-Df-qWR" firstAttribute="leading" secondItem="UIT-aS-D2v" secondAttribute="leading" constant="16" id="7Au-zx-mBQ"/>
+                                <constraint firstItem="kdj-Df-qWR" firstAttribute="leading" secondItem="UIT-aS-D2v" secondAttribute="leading" constant="6" id="7Au-zx-mBQ"/>
                                 <constraint firstItem="fep-sX-u9j" firstAttribute="leading" secondItem="UIT-aS-D2v" secondAttribute="leading" id="Hai-Nb-vCe"/>
                                 <constraint firstAttribute="trailing" secondItem="fep-sX-u9j" secondAttribute="trailing" id="OLo-1R-562"/>
-                                <constraint firstAttribute="trailing" secondItem="kdj-Df-qWR" secondAttribute="trailing" constant="16" id="aVk-uN-q0n"/>
+                                <constraint firstAttribute="trailing" secondItem="kdj-Df-qWR" secondAttribute="trailing" constant="6" id="aVk-uN-q0n"/>
                             </constraints>
                         </stackView>
                     </subviews>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="backgroundColor" red="0.066666666669999999" green="0.1647058824" blue="0.30588235289999999" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="UIT-aS-D2v" secondAttribute="trailing" id="8WK-Sa-57f"/>
                         <constraint firstItem="UIT-aS-D2v" firstAttribute="top" secondItem="TDX-gX-wQ7" secondAttribute="top" id="RBn-Ne-Rza"/>
@@ -145,6 +168,9 @@
     </objects>
     <resources>
         <image name="icon_keyboard" width="24" height="24"/>
+        <image name="icon_photo_album" width="28" height="28"/>
+        <image name="icon_send" width="32" height="32"/>
+        <image name="icon_send_active" width="32" height="32"/>
         <image name="icon_voice_message_grey" width="24" height="24"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

@@ -80,10 +80,7 @@ class AmityTextComposeBarView: AmityView {
     }
     
     private func setupView() {
-        contentView.backgroundColor = AmityColorSet.backgroundColor
-        textView.backgroundColor = AmityColorSet.backgroundColor
-        textView.layer.borderWidth = 1
-        textView.layer.borderColor = AmityColorSet.secondary.blend(.shade4).cgColor
+        textView.backgroundColor = AmityColorSet.blue
         textView.layer.cornerRadius = 4
         textView.customTextViewDelegate = self
         

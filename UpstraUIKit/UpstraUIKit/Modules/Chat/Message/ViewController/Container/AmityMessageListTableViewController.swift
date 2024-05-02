@@ -141,7 +141,14 @@ extension AmityMessageListTableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return screenViewModel.dataSource.numberOfMessage(in: section)
     }
-    
+
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        guard let message = screenViewModel.dataSource.message(at: indexPath) else {
+            return
+        }
+        message.object.markRead()
+    }
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let message = screenViewModel.dataSource.message(at: indexPath),
             let cellIdentifier = cellIdentifier(for: message) else {
