@@ -255,7 +255,7 @@ private extension AmityMessageListViewController {
     }
     
     func setupMessageContainer() {
-        messageViewController = AmityMessageListTableViewController.make(viewModel: screenViewModel)
+        messageViewController = AmityMessageListTableViewController.make(viewModel: screenViewModel, chatUsers: chatUsers)
         messageViewController?.onMessagesLoaded = { [weak self] in
             self?.composeBarContainerView.isHidden = false
             self?.onMessagesLoaded?()

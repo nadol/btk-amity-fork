@@ -12,6 +12,7 @@ import AmitySDK
 final class AmityMessageListTableViewController: UITableViewController {
 
     var isFirstLoad = true
+    var chatUsers = [ChatUser]()
     var onMessagesLoaded: (() -> Void)?
 
     // MARK: - Properties
@@ -36,8 +37,13 @@ final class AmityMessageListTableViewController: UITableViewController {
         screenViewModel.action.getMessage()
     }
     
-    static func make(viewModel: AmityMessageListScreenViewModelType) -> AmityMessageListTableViewController {
-        return AmityMessageListTableViewController(viewModel: viewModel)
+    static func make(
+        viewModel: AmityMessageListScreenViewModelType,
+        chatUsers: [ChatUser]
+    ) -> AmityMessageListTableViewController {
+        let viewController = AmityMessageListTableViewController(viewModel: viewModel)
+        viewController.chatUsers = chatUsers
+        return viewController
     }
     
 }
@@ -214,6 +220,34 @@ extension AmityMessageListTableViewController: AmityMessageCellDelegate {
             break
         }
     }
+
+    func avatarTapped(chatUser: ChatUser) {
+        let guestInfoController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        let displayData = ChatUserInfoDisplayData(
+            avatarUrl: chatUser.avatarURL,
+            fullName: chatUser.fullName,
+            role: chatUser.role,
+            isCommissioner: chatUser.isCommissioner
+        )
+        let guestInfoView = ChatUserInfoView(displayData: displayData)
+        guestInfoController.view.addSubview(guestInfoView)
+        guestInfoView.clipsToBounds = true
+        guestInfoView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            guestInfoView.topAnchor.constraint(equalTo: guestInfoController.view.topAnchor),
+            guestInfoView.rightAnchor.constraint(equalTo: guestInfoController.view.rightAnchor),
+            guestInfoView.leftAnchor.constraint(equalTo: guestInfoController.view.leftAnchor),
+            guestInfoView.heightAnchor.constraint(equalToConstant: ChatUserInfoView.height)
+        ])
+
+        guestInfoController.view.clipsToBounds = true
+        guestInfoController.view.translatesAutoresizingMaskIntoConstraints = false
+        guestInfoController.view.heightAnchor.constraint(equalToConstant: 304.0).isActive = true
+
+        let okAction = UIAlertAction(title: "OK", style: .default)
+        guestInfoController.addAction(okAction)
+        present(guestInfoController, animated: true)
+    }
 }
 
 // MARK: - Private functions
@@ -225,6 +259,7 @@ extension AmityMessageListTableViewController {
             cell.delegate = self
             cell.setViewModel(with: screenViewModel)
             cell.setIndexPath(with: indexPath)
+            cell.chatUser = chatUsers.first(where: { $0.id == message.object.userId })
         }
         
         (cell as? AmityMessageCellProtocol)?.display(message: message)

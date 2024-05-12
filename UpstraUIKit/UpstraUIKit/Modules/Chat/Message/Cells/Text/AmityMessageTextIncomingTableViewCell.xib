@@ -38,7 +38,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Prh-Fa-Je4">
                                 <rect key="frame" x="0.0" y="0.0" width="172" height="93.5"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HTA-Os-JiY" customClass="AmityResponsiveView" customModule="AmityUIKit" customModuleProvider="target">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HTA-Os-JiY">
                                         <rect key="frame" x="0.0" y="0.0" width="172" height="93.5"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="TML-7c-OCj" customClass="AmityExpandableLabel" customModule="AmityUIKit" customModuleProvider="target">

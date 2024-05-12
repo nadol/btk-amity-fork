@@ -17,6 +17,7 @@ public protocol AmityMessageCellProtocol: UITableViewCell, AmityCellIdentifiable
 protocol AmityMessageCellDelegate: AnyObject {
     func performEvent(_ cell: AmityMessageTableViewCell, events: AmityMessageCellEvents)
     func performEvent(_ cell: AmityMessageTableViewCell, labelEvents: AmityMessageLabelEvents)
+    func avatarTapped(chatUser: ChatUser)
 }
 
 enum AmityMessageCellEvents {

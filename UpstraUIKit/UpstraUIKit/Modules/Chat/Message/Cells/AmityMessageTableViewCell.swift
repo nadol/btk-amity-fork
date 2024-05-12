@@ -19,7 +19,7 @@ class AmityMessageTableViewCell: UITableViewCell, AmityMessageCellProtocol {
     
     // MARK: - IBOutlet Properties
     @IBOutlet var avatarView: AmityAvatarView!
-    @IBOutlet var containerView: AmityResponsiveView!
+    @IBOutlet var containerView: UIView!
     @IBOutlet var displayNameLabel: UILabel?
     @IBOutlet var metadataLabel: UILabel!
     @IBOutlet var messageImageView: UIImageView!
@@ -31,6 +31,7 @@ class AmityMessageTableViewCell: UITableViewCell, AmityMessageCellProtocol {
     @IBOutlet var containerMetadataView: UIView!
     
     // MARK: - Properties
+    var chatUser: ChatUser?
     var screenViewModel: AmityMessageListScreenViewModelType!
     var message: AmityMessageModel!
     
@@ -91,7 +92,6 @@ class AmityMessageTableViewCell: UITableViewCell, AmityMessageCellProtocol {
     }
 
     func display(message: AmityMessageModel) {
-        
         self.message = message
         
         if message.isOwner {
@@ -172,39 +172,23 @@ class AmityMessageTableViewCell: UITableViewCell, AmityMessageCellProtocol {
     
     // MARK: - Setup View
     private func setupView() {
-        let avatarTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(avatarTapped))
         selectionStyle = .none
         statusMetadataImageView?.isHidden = true
         containerView?.layer.backgroundColor = AmityColorSet.blue.cgColor
         containerView?.layer.cornerRadius = 8.0
-        containerView?.menuItems = [deleteMenuItem]
+        if let responsiveView = containerView as? AmityResponsiveView {
+            responsiveView.menuItems = [deleteMenuItem]
+        }
         errorButton?.isHidden = true
         displayNameLabel?.font = AmityFontSet.displayNameLabelFont
         displayNameLabel?.textColor = AmityColorSet.lightBlue
         contentView.backgroundColor = AmityColorSet.backgroundBlue
-    }
-
-    @objc private func avatarTapped() {
-//        let guestInfoController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
-//        let displayData = EventGuestInfoDisplayData(avatarUrl: <#T##URL#>, fullName: <#T##String#>, role: <#T##String?#>, isCommissioner: <#T##Bool#>)
-//        let guestInfoView = EventGuestInfoView(displayData: displayData)
-//        guestInfoController.view.addSubview(guestInfoView)
-//        guestInfoView.clipsToBounds = true
-//        guestInfoView.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint.activate([
-//            guestInfoView.topAnchor.constraint(equalTo: guestInfoController.view.topAnchor),
-//            guestInfoView.rightAnchor.constraint(equalTo: guestInfoController.view.rightAnchor),
-//            guestInfoView.leftAnchor.constraint(equalTo: guestInfoController.view.leftAnchor),
-//            guestInfoView.heightAnchor.constraint(equalToConstant: EventGuestInfoView.height)
-//        ])
-//
-//        guestInfoController.view.clipsToBounds = true
-//        guestInfoController.view.translatesAutoresizingMaskIntoConstraints = false
-//        guestInfoController.view.heightAnchor.constraint(equalToConstant: 304.0).isActive = true
-//
-//        let okAction = UIAlertAction(title: "OK", style: .default)
-//        guestInfoController.addAction(okAction)
-//        dependencies.navigationController.present(guestInfoController, animated: true)
+        avatarView?.onAvatarTapped = { [weak self] in
+            guard let chatUser = self?.chatUser else {
+                return
+            }
+            self?.delegate?.avatarTapped(chatUser: chatUser)
+        }
     }
 
     private func setDisplayName(for message: AmityMessageModel) {

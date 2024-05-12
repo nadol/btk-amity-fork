@@ -32,7 +32,9 @@ public enum AmityAvatarPosition {
 /// Amity avatar view
 /// An object that displays a single image or load image from url remote resource
 public final class AmityAvatarView: AmityImageView {
-    
+
+    var onAvatarTapped: (() -> Void)?
+
     @IBOutlet private var placeHolderWidthConstraint: NSLayoutConstraint!
     
     /// A shape of imageView
@@ -77,8 +79,15 @@ public final class AmityAvatarView: AmityImageView {
         
         updateAvatarShape()
         updatePlaceholderConstraint()
+
+        let avatarTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(avatarTapped))
+        addGestureRecognizer(avatarTapGestureRecognizer)
     }
-    
+
+    @objc func avatarTapped() {
+        onAvatarTapped?()
+    }
+
     private func updateAvatarShape() {
         switch avatarShape {
         case .circle:
