@@ -16,6 +16,7 @@ final class AmityMessageImageIncomingTableViewCell: AmityMessageImageTableViewCe
     }
     
     override func display(message: AmityMessageModel) {
+        layer.backgroundColor = AmityColorSet.blue.cgColor
         super.display(message: message)
     }
     

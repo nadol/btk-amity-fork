@@ -19,7 +19,7 @@ import UIKit
 /// To properly make compose bar easily replaceable, the `AmityComposeBar` protocol and the flow  of `AmityMessageListViewController` need be refactored.
 ///
 protocol AmityComposeBar: AnyObject {
-    
+
     func updateViewDidTextChanged(_ text: String)
     
     func rotateMoreButton(canRotate: Bool)

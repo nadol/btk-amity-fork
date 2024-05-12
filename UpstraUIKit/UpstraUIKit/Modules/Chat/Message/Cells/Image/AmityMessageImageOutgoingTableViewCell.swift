@@ -19,7 +19,8 @@ final class AmityMessageImageOutgoingTableViewCell: AmityMessageImageTableViewCe
     }
     
     private func setupView() {
-        drimView.backgroundColor = UIColor.black.withAlphaComponent(0.5)
+        drimView.backgroundColor = UIColor.black.withAlphaComponent(0.6)
+//        layer.backgroundColor = AmityColorSet.blue.cgColor
     }
     
     override func display(message: AmityMessageModel) {

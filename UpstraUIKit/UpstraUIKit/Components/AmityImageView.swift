@@ -127,7 +127,7 @@ public class AmityImageView: AmityView {
         let _session = session
 
         // Wrap our request in a work item
-        AmityUIKitManagerInternal.shared.fileService.loadImage(imageURL: imageURL, size: size) { [weak self] result in
+        AmityUIKitManagerInternal.shared.fileService.loadImage(imageURL: imageURL, size: .small) { [weak self] result in
             switch result {
             case .success(let image):
                 // To prevent diplaying the wrong image after cell is dequeued.

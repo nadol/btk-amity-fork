@@ -646,6 +646,10 @@
 		D4D7683E26006D7000AD4367 /* AmitySettingContentIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4D7683D26006D7000AD4367 /* AmitySettingContentIcon.swift */; };
 		D4EC11E525B93DCE0095F507 /* AmityPostSharingSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EC11E425B93DCE0095F507 /* AmityPostSharingSettings.swift */; };
 		D4EC11EA25B93E000095F507 /* AmityPostSharingTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4EC11E925B93E000095F507 /* AmityPostSharingTarget.swift */; };
+		E388C6B02BF011FF001E0B4E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = E388C6AF2BF011FF001E0B4E /* Kingfisher */; };
+		E388C6B82BF0CB0D001E0B4E /* ChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E388C6B72BF0CB0D001E0B4E /* ChatUser.swift */; };
+		E388C6BB2BF0D019001E0B4E /* ChatUserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E388C6B92BF0D019001E0B4E /* ChatUserInfoView.swift */; };
+		E388C6BC2BF0D019001E0B4E /* ChatUserInfoDisplayData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E388C6BA2BF0D019001E0B4E /* ChatUserInfoDisplayData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1304,6 +1308,9 @@
 		D4D7683D26006D7000AD4367 /* AmitySettingContentIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmitySettingContentIcon.swift; sourceTree = "<group>"; };
 		D4EC11E425B93DCE0095F507 /* AmityPostSharingSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmityPostSharingSettings.swift; sourceTree = "<group>"; };
 		D4EC11E925B93E000095F507 /* AmityPostSharingTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmityPostSharingTarget.swift; sourceTree = "<group>"; };
+		E388C6B72BF0CB0D001E0B4E /* ChatUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUser.swift; sourceTree = "<group>"; };
+		E388C6B92BF0D019001E0B4E /* ChatUserInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUserInfoView.swift; sourceTree = "<group>"; };
+		E388C6BA2BF0D019001E0B4E /* ChatUserInfoDisplayData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUserInfoDisplayData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1311,6 +1318,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E388C6B02BF011FF001E0B4E /* Kingfisher in Frameworks */,
 				6861A0AC2BC803C700274653 /* SharedFrameworks in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2260,6 +2268,9 @@
 		72A3509D24EA820700DA9D46 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				E388C6B72BF0CB0D001E0B4E /* ChatUser.swift */,
+				E388C6BA2BF0D019001E0B4E /* ChatUserInfoDisplayData.swift */,
+				E388C6B92BF0D019001E0B4E /* ChatUserInfoView.swift */,
 				72A350A324EA820700DA9D46 /* AmityMessageCellProtocol.swift */,
 				72A3509E24EA820700DA9D46 /* AmityMessageTableViewCell.swift */,
 				B70D2BA3257713C100E2D56B /* Audio */,
@@ -4423,6 +4434,7 @@
 			name = AmityUIKit;
 			packageProductDependencies = (
 				6861A0AB2BC803C700274653 /* SharedFrameworks */,
+				E388C6AF2BF011FF001E0B4E /* Kingfisher */,
 			);
 			productName = UpstraUIKit;
 			productReference = 72A3503024EA811500DA9D46 /* AmityUIKit.framework */;
@@ -4473,6 +4485,9 @@
 				Base,
 			);
 			mainGroup = 72A3502624EA811500DA9D46;
+			packageReferences = (
+				E388C6AE2BF011FF001E0B4E /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			productRefGroup = 72A3503124EA811500DA9D46 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -4660,6 +4675,7 @@
 				72A3517624EA820800DA9D46 /* PreviewViewController.swift in Sources */,
 				97D723DC2695B133000735F5 /* AmityUserFollowersScreenViewModel.swift in Sources */,
 				97D0EBAF26A14A8800E9FE6A /* AmityPendingPostsDetailGetPostViewModel.swift in Sources */,
+				E388C6BB2BF0D019001E0B4E /* ChatUserInfoView.swift in Sources */,
 				724FBA8C252F41F400EDC556 /* AmityHUDLoadingView.swift in Sources */,
 				B7B31C5E250F4ACF000AC6E4 /* SegmentedPagerTabStripViewController.swift in Sources */,
 				0D95688825D58FD800DE98FD /* AmityPostTextComponent.swift in Sources */,
@@ -4880,6 +4896,7 @@
 				7809D64726374BD900C5B517 /* AmityMyCommunityScreenViewModelProtocol.swift in Sources */,
 				D42E1B8A274CED5C006C41ED /* AmityMentionManager.swift in Sources */,
 				72A3516A24EA820800DA9D46 /* ImagePickerController+Closure.swift in Sources */,
+				E388C6BC2BF0D019001E0B4E /* ChatUserInfoDisplayData.swift in Sources */,
 				B7B604FE24FBA410005FB53D /* AmityDynamicHeightCollectionView.swift in Sources */,
 				72A3516D24EA820800DA9D46 /* AssetStore.swift in Sources */,
 				B7A9242824F428DE001F4B49 /* AmityNewsfeedEmptyView.swift in Sources */,
@@ -5004,6 +5021,7 @@
 				B75A90E525887C690068DCA2 /* AmityCommunityMembershipModel.swift in Sources */,
 				724FBA8E2530141600EDC556 /* Data+Extension.swift in Sources */,
 				B7B31C65250F4ACF000AC6E4 /* BarPagerTabStripViewController.swift in Sources */,
+				E388C6B82BF0CB0D001E0B4E /* ChatUser.swift in Sources */,
 				72A3512E24EA820800DA9D46 /* AmityView.swift in Sources */,
 				B797ED1224F6CCFA00F3B411 /* UIButton+Extension.swift in Sources */,
 				7214C9E52632D9BD00192BB3 /* AmityCommunityCreatorViewController.swift in Sources */,
@@ -5214,7 +5232,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -5272,7 +5290,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -5301,7 +5319,7 @@
 				);
 				INFOPLIST_FILE = UpstraUIKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5337,7 +5355,7 @@
 				);
 				INFOPLIST_FILE = UpstraUIKit/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -5426,10 +5444,26 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		E388C6AE2BF011FF001E0B4E /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.11.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		6861A0AB2BC803C700274653 /* SharedFrameworks */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SharedFrameworks;
+		};
+		E388C6AF2BF011FF001E0B4E /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E388C6AE2BF011FF001E0B4E /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

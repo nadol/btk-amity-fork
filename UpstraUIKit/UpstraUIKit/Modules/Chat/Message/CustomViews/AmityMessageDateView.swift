@@ -30,12 +30,10 @@ class AmityMessageDateView: AmityView {
         backgroundColor = .clear
         contentView.backgroundColor = .clear
         
-        containerView.backgroundColor = AmityColorSet.secondary.blend(.shade4)
+        containerView.backgroundColor = AmityColorSet.blue
         containerView.layer.cornerRadius = containerView.frame.height / 2
         
-        dateLabel.textColor = AmityColorSet.base
-        dateLabel.font = AmityFontSet.caption
-        
+        dateLabel.textColor = AmityColorSet.lightBlue
+        dateLabel.font = AmityFontSet.messageDateSeparatorFont
     }
-    
 }

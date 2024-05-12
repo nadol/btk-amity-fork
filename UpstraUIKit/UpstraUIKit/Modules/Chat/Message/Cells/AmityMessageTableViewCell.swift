@@ -6,6 +6,7 @@
 //  Copyright © 2563 Amity Communication. All rights reserved.
 //
 
+import Kingfisher
 import UIKit
 import AmitySDK
 
@@ -19,7 +20,7 @@ class AmityMessageTableViewCell: UITableViewCell, AmityMessageCellProtocol {
     // MARK: - IBOutlet Properties
     @IBOutlet var avatarView: AmityAvatarView!
     @IBOutlet var containerView: AmityResponsiveView!
-    @IBOutlet var displayNameLabel: UILabel!
+    @IBOutlet var displayNameLabel: UILabel?
     @IBOutlet var metadataLabel: UILabel!
     @IBOutlet var messageImageView: UIImageView!
     @IBOutlet var statusMetadataImageView: UIImageView!
@@ -83,12 +84,12 @@ class AmityMessageTableViewCell: UITableViewCell, AmityMessageCellProtocol {
     
     func setRoundCorner(isOwner: Bool) -> CACornerMask {
         if isOwner {
-            return [.layerMinXMinYCorner, .layerMaxXMaxYCorner, .layerMinXMaxYCorner]
+            return [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMinXMaxYCorner]
         } else {
-            return [.layerMinXMaxYCorner, .layerMaxXMaxYCorner, .layerMaxXMinYCorner]
+            return [.layerMinXMinYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner]
         }
     }
-    
+
     func display(message: AmityMessageModel) {
         
         self.message = message
@@ -99,11 +100,11 @@ class AmityMessageTableViewCell: UITableViewCell, AmityMessageCellProtocol {
             
             switch message.messageType {
             case .text, .audio:
-                containerView.backgroundColor = AmityColorSet.messageBubble
+                containerView.backgroundColor = AmityColorSet.ownerMessageColor
             case .image:
-                containerView.backgroundColor = AmityColorSet.messageBubbleInverse
+                containerView.backgroundColor = .clear
             default:
-                containerView.backgroundColor = AmityColorSet.backgroundColor
+                containerView.backgroundColor = AmityColorSet.ownerMessageColor
             }
         } else {
             avatarView.placeholder = AmityIconSet.defaultAvatar
@@ -112,13 +113,10 @@ class AmityMessageTableViewCell: UITableViewCell, AmityMessageCellProtocol {
             
             switch message.messageType {
             case .text, .audio:
-                containerView.backgroundColor = AmityColorSet.messageBubbleInverse
+                containerView.backgroundColor = AmityColorSet.blue
             default:
-                containerView.backgroundColor = AmityColorSet.backgroundColor
+                containerView.backgroundColor = .clear
             }
-            
-            displayNameLabel.font = AmityFontSet.body
-            displayNameLabel.textColor = AmityColorSet.base.blend(.shade1)
             
             setDisplayName(for: message)
         }
@@ -137,14 +135,18 @@ class AmityMessageTableViewCell: UITableViewCell, AmityMessageCellProtocol {
     
     func setMetadata(message: AmityMessageModel) {
         let fullString = NSMutableAttributedString()
-        let style: [NSAttributedString.Key : Any]? = [.foregroundColor: AmityColorSet.base.blend(.shade2),
-                                                      .font: AmityFontSet.caption]
+        let style: [NSAttributedString.Key : Any]? = [
+            .foregroundColor: AmityColorSet.lightBlue,
+            .font: AmityFontSet.metadataLabelFont
+        ]
         if message.isDeleted {
             containerMessageView.isHidden = true
             statusMetadataImageView.isHidden = false
-            let deleteMessage =  String.localizedStringWithFormat(AmityLocalizedStringSet.MessageList.deleteMessage.localizedString, message.time)
+            var deleteMessage =  String.localizedStringWithFormat(AmityLocalizedStringSet.MessageList.deleteMessage.localizedString, message.time)
+            deleteMessage += "               "
             fullString.append(NSAttributedString(string: deleteMessage, attributes: style))
-            statusMetadataImageView.image = AmityIconSet.iconDeleteMessage
+            statusMetadataImageView.image = AmityIconSet.iconDeleteMessage?
+                .withTintColor(AmityColorSet.lightBlue, renderingMode: .alwaysOriginal)
         } else if message.isEdited {
             let editMessage = String.localizedStringWithFormat(AmityLocalizedStringSet.MessageList.editMessage.localizedString, message.time)
             fullString.append(NSAttributedString(string: editMessage, attributes: style))
@@ -170,28 +172,53 @@ class AmityMessageTableViewCell: UITableViewCell, AmityMessageCellProtocol {
     
     // MARK: - Setup View
     private func setupView() {
+        let avatarTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(avatarTapped))
         selectionStyle = .none
-        
         statusMetadataImageView?.isHidden = true
-        containerView?.backgroundColor = UIColor.gray.withAlphaComponent(0.25)
-        containerView?.layer.cornerRadius = 4
-        containerView?.menuItems = [editMenuItem, deleteMenuItem, reportMenuItem]
+        containerView?.layer.backgroundColor = AmityColorSet.blue.cgColor
+        containerView?.layer.cornerRadius = 8.0
+        containerView?.menuItems = [deleteMenuItem]
         errorButton?.isHidden = true
-        
-        contentView.backgroundColor = AmityColorSet.backgroundColor
+        displayNameLabel?.font = AmityFontSet.displayNameLabelFont
+        displayNameLabel?.textColor = AmityColorSet.lightBlue
+        contentView.backgroundColor = AmityColorSet.backgroundBlue
     }
-    
+
+    @objc private func avatarTapped() {
+//        let guestInfoController = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+//        let displayData = EventGuestInfoDisplayData(avatarUrl: <#T##URL#>, fullName: <#T##String#>, role: <#T##String?#>, isCommissioner: <#T##Bool#>)
+//        let guestInfoView = EventGuestInfoView(displayData: displayData)
+//        guestInfoController.view.addSubview(guestInfoView)
+//        guestInfoView.clipsToBounds = true
+//        guestInfoView.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint.activate([
+//            guestInfoView.topAnchor.constraint(equalTo: guestInfoController.view.topAnchor),
+//            guestInfoView.rightAnchor.constraint(equalTo: guestInfoController.view.rightAnchor),
+//            guestInfoView.leftAnchor.constraint(equalTo: guestInfoController.view.leftAnchor),
+//            guestInfoView.heightAnchor.constraint(equalToConstant: EventGuestInfoView.height)
+//        ])
+//
+//        guestInfoController.view.clipsToBounds = true
+//        guestInfoController.view.translatesAutoresizingMaskIntoConstraints = false
+//        guestInfoController.view.heightAnchor.constraint(equalToConstant: 304.0).isActive = true
+//
+//        let okAction = UIAlertAction(title: "OK", style: .default)
+//        guestInfoController.addAction(okAction)
+//        dependencies.navigationController.present(guestInfoController, animated: true)
+    }
+
     private func setDisplayName(for message: AmityMessageModel) {
         setDisplayName(message.displayName)
     }
     
     private func setDisplayName(_ name: String?) {
-        displayNameLabel.text = name
+        displayNameLabel?.text = name
     }
     
     private func setAvatarImage(_ messageModel: AmityMessageModel) {
-        let url = messageModel.object.user?.getAvatarInfo()?.fileURL
-        avatarView.setImage(withImageURL: url, placeholder: AmityIconSet.defaultAvatar)
+        if let urlString = messageModel.object.user?.avatarCustomUrl {
+            avatarView.imageView.kf.setImage(with: URL(string: urlString))
+        }
     }
 
 }

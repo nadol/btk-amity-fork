@@ -25,7 +25,7 @@ open class AmityChannelEventHandler {
     open func channelDidTap(from source: AmityViewController,
                             channelId: String, subChannelId: String) {
         let settings = AmityMessageListViewController.Settings()
-        let viewController = AmityMessageListViewController.make(channelId: channelId, subChannelId: subChannelId, settings: settings)
+        let viewController = AmityMessageListViewController.make(channelId: channelId, subChannelId: subChannelId, settings: settings, chatUsers: [])
         source.navigationController?.pushViewController(viewController, animated: true)
     }
     

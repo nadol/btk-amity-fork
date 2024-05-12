@@ -56,13 +56,13 @@ open class AmityTextView: UITextView {
     }
     
     /// The UITextView placeholder text color
-    public var placeholderColor: UIColor = UIColor.lightGray
-    
+    public var placeholderColor: UIColor = AmityColorSet.lightBlue
+
     /// Resize the placeholder UILabel to make sure it's in the same position as the UITextView text
     private func resizePlaceholder() {
         let leftMargin = padding == .zero ? 0 : textContainer.lineFragmentPadding + padding.left
         let labelX = leftMargin
-        let labelY = textContainerInset.top - 2
+        let labelY = textContainerInset.top
         let labelWidth = frame.width - (labelX * 2)
         let labelHeight = placeholderLabel.frame.height
         placeholderLabel.frame = CGRect(x: labelX, y: labelY, width: labelWidth, height: labelHeight)

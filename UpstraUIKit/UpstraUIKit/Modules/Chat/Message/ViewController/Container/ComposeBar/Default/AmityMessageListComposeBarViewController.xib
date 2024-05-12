@@ -5,7 +5,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22684"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -34,7 +33,8 @@
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fep-sX-u9j">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
-                                    <color key="backgroundColor" red="0.58431372549019611" green="0.63137254901960782" blue="0.80392156862745101" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.22352941176470587" green="0.27058823529411763" blue="0.43529411764705883" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="1" id="ojO-Q7-Cgc"/>
                                     </constraints>
@@ -53,7 +53,7 @@
                                                     </constraints>
                                                     <state key="normal" image="icon_photo_album"/>
                                                     <connections>
-                                                        <action selector="toggleDefaultKeyboardAndAudioKeyboardTap:" destination="-1" eventType="touchUpInside" id="Qna-3P-n5z"/>
+                                                        <action selector="photoButtonTapped:" destination="-1" eventType="touchUpInside" id="8Jm-7y-zhr"/>
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TzW-Ky-Sta">
@@ -130,13 +130,16 @@
                                             </subviews>
                                         </stackView>
                                     </subviews>
-                                    <color key="backgroundColor" red="0.066666666666666666" green="0.16470588235294117" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.070588235289999995" green="0.1647058824" blue="0.30588235289999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstItem="gU0-nB-1dd" firstAttribute="top" secondItem="kdj-Df-qWR" secondAttribute="top" id="NgL-0l-Xem"/>
                                         <constraint firstAttribute="bottom" secondItem="gU0-nB-1dd" secondAttribute="bottom" id="TX0-l6-1Z1"/>
                                     </constraints>
                                 </stackView>
                             </subviews>
+                            <color key="backgroundColor" red="0.070588235294117646" green="0.16470588235294117" blue="0.30588235294117649" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
                                 <constraint firstItem="kdj-Df-qWR" firstAttribute="leading" secondItem="UIT-aS-D2v" secondAttribute="leading" constant="6" id="7Au-zx-mBQ"/>
                                 <constraint firstItem="fep-sX-u9j" firstAttribute="leading" secondItem="UIT-aS-D2v" secondAttribute="leading" id="Hai-Nb-vCe"/>
@@ -145,7 +148,8 @@
                             </constraints>
                         </stackView>
                     </subviews>
-                    <color key="backgroundColor" red="0.066666666669999999" green="0.1647058824" blue="0.30588235289999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <color key="backgroundColor" red="0.070588235294117646" green="0.16470588235294117" blue="0.30588235294117649" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <constraints>
                         <constraint firstAttribute="trailing" secondItem="UIT-aS-D2v" secondAttribute="trailing" id="8WK-Sa-57f"/>
                         <constraint firstItem="UIT-aS-D2v" firstAttribute="top" secondItem="TDX-gX-wQ7" secondAttribute="top" id="RBn-Ne-Rza"/>
@@ -155,7 +159,8 @@
                 </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <color key="backgroundColor" red="0.070588235289999995" green="0.1647058824" blue="0.30588235289999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstAttribute="trailing" secondItem="TDX-gX-wQ7" secondAttribute="trailing" id="aiq-XA-cbc"/>
                 <constraint firstItem="TDX-gX-wQ7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="dhB-vj-NwQ"/>
@@ -172,8 +177,5 @@
         <image name="icon_send" width="32" height="32"/>
         <image name="icon_send_active" width="32" height="32"/>
         <image name="icon_voice_message_grey" width="24" height="24"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
     </resources>
 </document>

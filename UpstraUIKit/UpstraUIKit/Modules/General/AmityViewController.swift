@@ -82,7 +82,7 @@ open class AmityViewController: UIViewController {
     
     open override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = AmityColorSet.backgroundColor
+        view.backgroundColor = .clear
         leftBarButtonItem = UIBarButtonItem(image: AmityIconSet.iconBack, style: .plain, target: self, action: #selector(didTapLeftBarButton))
         leftBarButtonItem?.tintColor = AmityColorSet.base
         

@@ -69,5 +69,20 @@ public class AmityFontSet {
     public static var caption: UIFont {
         return currentTypography.caption
     }
-    
+
+    public static var displayNameLabelFont: UIFont {
+        return .systemFont(ofSize: 14.0, weight: .semibold)
+    }
+
+    public static var metadataLabelFont: UIFont {
+        return .systemFont(ofSize: 12.0, weight: .regular)
+    }
+
+    public static var messageFont: UIFont {
+        return .systemFont(ofSize: 16.0, weight: .regular)
+    }
+
+    public static var messageDateSeparatorFont: UIFont {
+        return .systemFont(ofSize: 13.0, weight: .semibold)
+    }
 }

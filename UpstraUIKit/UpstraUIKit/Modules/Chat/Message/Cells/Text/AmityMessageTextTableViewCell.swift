@@ -12,8 +12,8 @@ import AmitySDK
 class AmityMessageTextTableViewCell: AmityMessageTableViewCell {
     
     enum Constant {
-        static let maximumLines: Int = 8
-        static let textMessageFont = AmityFontSet.body
+        static let maximumLines = Int.max
+        static let textMessageFont = AmityFontSet.messageFont
     }
     
     @IBOutlet private var textMessageView: AmityExpandableLabel!
@@ -24,6 +24,7 @@ class AmityMessageTextTableViewCell: AmityMessageTableViewCell {
     }
 
     private func setupView() {
+        layer.backgroundColor = AmityColorSet.blue.cgColor
         textMessageView.text = ""
         textMessageView.textAlignment = .left
         textMessageView.numberOfLines = Constant.maximumLines
@@ -36,11 +37,11 @@ class AmityMessageTextTableViewCell: AmityMessageTableViewCell {
     override func display(message: AmityMessageModel) {
         super.display(message: message)
         if message.isOwner {
-            textMessageView.textColor = AmityColorSet.baseInverse
+            textMessageView.textColor = .white
             textMessageView.readMoreColor = AmityColorSet.baseInverse
             textMessageView.hyperLinkColor = .white
         } else {
-            textMessageView.textColor = AmityColorSet.base
+            textMessageView.textColor = .white
             textMessageView.readMoreColor = AmityColorSet.highlight
             textMessageView.hyperLinkColor = AmityColorSet.highlight
         }
@@ -63,13 +64,13 @@ class AmityMessageTextTableViewCell: AmityMessageTableViewCell {
             let horizontalPadding: CGFloat = 112
             actualWidth = boundingWidth - horizontalPadding
             
-            let verticalPadding: CGFloat = 64
+            let verticalPadding: CGFloat = 56
             height += verticalPadding
         } else {
             let horizontalPadding: CGFloat = 164
             actualWidth = boundingWidth - horizontalPadding
             
-            let verticalPadding: CGFloat = 98
+            let verticalPadding: CGFloat = 90
             height += verticalPadding
         }
         

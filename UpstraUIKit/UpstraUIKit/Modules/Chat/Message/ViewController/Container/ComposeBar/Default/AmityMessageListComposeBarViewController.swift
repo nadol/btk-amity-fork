@@ -23,6 +23,52 @@ final class AmityMessageListComposeBarViewController: UIViewController {
     private var screenViewModel: AmityMessageListScreenViewModelType!
     let composeBarView = AmityKeyboardComposeBarViewController.make()
     
+    @IBAction func photoButtonTapped(_ sender: Any) {
+        let alert = UIAlertController(
+            title: nil,
+            message: nil,
+            preferredStyle: .actionSheet
+        )
+        alert.addAction(UIAlertAction(
+            title: "Choose from gallery",
+            style: .default,
+            handler: { [weak self] _ in
+                self?.showImagePicker()
+            }
+        ))
+        alert.addAction(UIAlertAction(
+            title: "Take a photo",
+            style: .default,
+            handler: { [weak self] _ in
+                self?.showCamera()
+            }
+        ))
+        alert.addAction(UIAlertAction(
+            title: "Cancel",
+            style: .cancel,
+            handler: { _ in
+            }
+        ))
+        present(alert,
+                animated: true,
+                completion: nil
+        )
+    }
+
+    private func showImagePicker() {
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
+    }
+
+    private func showCamera() {
+        let cameraPicker = UIImagePickerController()
+        cameraPicker.sourceType = .camera
+        cameraPicker.delegate = self
+        present(cameraPicker, animated: true)
+    }
+
     // MARK: - Settings
     private var setting = AmityMessageListViewController.Settings()
     
@@ -70,6 +116,7 @@ private extension AmityMessageListComposeBarViewController {
 private extension AmityMessageListComposeBarViewController {
     
     func setupView() {
+        view.backgroundColor = .red
         setupTextComposeBarView()
         setupSendMessageButton()
         setupShowKeyboardComposeBarButton()
@@ -78,6 +125,9 @@ private extension AmityMessageListComposeBarViewController {
     }
     
     func setupTextComposeBarView() {
+        textComposeBarView.placeholderColor = AmityColorSet.lightBlue
+        textComposeBarView.textColor = .white
+        textComposeBarView.tintColor = .white
         textComposeBarView.placeholder = AmityLocalizedStringSet.textMessagePlaceholder.localizedString
         textComposeBarView.textViewDidChanged = { [weak self] text in
             self?.screenViewModel.action.setText(withText: text)
@@ -255,5 +305,19 @@ extension AmityMessageListComposeBarViewController: UIPopoverPresentationControl
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
+    }
+}
+
+extension AmityMessageListComposeBarViewController: UIImagePickerControllerDelegate & UINavigationControllerDelegate {
+    public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        guard let image = info[.originalImage] as? UIImage else {
+            return
+        }
+        
+        picker.dismiss(animated: true) { [weak self] in
+            let resizedImage = image.scalePreservingAspectRatio()
+            let media = AmityMedia(state: .image(resizedImage), type: .image)
+            self?.screenViewModel.action.send(withMedias: [media])
+        }
     }
 }

@@ -12,6 +12,8 @@ import AmitySDK
 
 final class AmityMessageListScreenViewModel: AmityMessageListScreenViewModelType {
     
+    var onMessagesLoaded: (() -> Void)?
+
     enum Route {
         case pop
     }
@@ -48,7 +50,7 @@ final class AmityMessageListScreenViewModel: AmityMessageListScreenViewModelType
     enum KeyboardInputEvents {
         case `default`, composeBarMenu, audio
     }
-    
+
     weak var delegate: AmityMessageListScreenViewModelDelegate?
         
     // MARK: - Repository
@@ -74,7 +76,8 @@ final class AmityMessageListScreenViewModel: AmityMessageListScreenViewModelType
     private let channelId: String
     private let subChannelId: String
     private var isFirstTimeLoaded: Bool = true
-    
+    private var isFirstLoad = true
+
     private let debouncer = Debouncer(delay: 0.6)
     private var dataSourceHash: Int = -1 // to track if data source changes
     private var lastMessageHash: Int = -1 // to track if the last message changes
@@ -213,7 +216,7 @@ extension AmityMessageListScreenViewModel {
         guard let text = text else { return }
         self.text = text
     }
-    
+
     func getChannel(){
         channelNotificationToken?.invalidate()
         channelNotificationToken = channelRepository.getChannel(channelId).observe { [weak self] (channel, error) in
@@ -228,7 +231,21 @@ extension AmityMessageListScreenViewModel {
         messagesCollection = messageRepository.getMessages(options: queryOptions)
         
         messagesNotificationToken = messagesCollection?.observe { [weak self] (liveCollection, change, error) in
-            self?.groupMessages(in: liveCollection, change: change)
+            guard let self else {
+                return
+            }
+
+            if liveCollection.snapshots.isEmpty {
+                onMessagesLoaded?()
+            }
+
+            if self.isFirstLoad {
+                guard let latestMessage = liveCollection.object(at: 0) else { return }
+                latestMessage.markRead()
+
+                self.isFirstLoad = false
+            }
+            self.groupMessages(in: liveCollection, change: change)
         }
         
         didEnterBackgroundObservation = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification, object: nil, queue: .main) { [weak self] notification in

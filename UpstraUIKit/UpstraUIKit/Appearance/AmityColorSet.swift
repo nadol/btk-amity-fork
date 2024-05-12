@@ -9,10 +9,31 @@
 import UIKit
 
 struct AmityColorSet {
+    static var backgroundBlue: UIColor {
+        UIColor(red: 18.0 / 255.0, green: 42.0 / 255.0, blue: 78.0 / 255.0, alpha: 1.0)
+    }
+    
     static var blue: UIColor {
         UIColor(red: 57.0 / 255.0, green: 69.0 / 255.0, blue: 111.0 / 255.0, alpha: 1.0)
     }
-    
+
+    static let textGray = UIColor(red: 161.0 / 255.0, green: 161.0 / 255.0, blue: 161.0 / 255.0, alpha: 1.0)
+    static let yourUserIndicatorBackgroundColor = UIColor(
+        red: 102.0 / 255.0,
+        green: 117.0 / 255.0,
+        blue: 172.0 / 255.0,
+        alpha: 1.0
+    )
+
+    // 95A1CD
+    static var lightBlue: UIColor {
+        UIColor(red: 149.0 / 255.0, green: 161.0 / 255.0, blue: 205.0 / 255.0, alpha: 1.0)
+    }
+
+    static var ownerMessageColor: UIColor {
+        UIColor(red: 117.0 / 255.0, green: 121.0 / 255.0, blue: 207.0 / 255.0, alpha: 1.0)
+    }
+
     static var primary: UIColor {
         return AmityThemeManager.currentTheme.primary
     }
@@ -39,9 +60,6 @@ struct AmityColorSet {
     }
     
     static var backgroundColor: UIColor {
-        return UIColor.white
+        return .clear
     }
-
-    
-
 }

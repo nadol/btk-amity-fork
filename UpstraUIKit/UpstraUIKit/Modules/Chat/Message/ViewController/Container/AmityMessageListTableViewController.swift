@@ -10,10 +10,13 @@ import UIKit
 import AmitySDK
 
 final class AmityMessageListTableViewController: UITableViewController {
-    
+
+    var isFirstLoad = true
+    var onMessagesLoaded: (() -> Void)?
+
     // MARK: - Properties
     private var screenViewModel: AmityMessageListScreenViewModelType!
-    
+
     // MARK: - View lifecycle
     private convenience init(viewModel: AmityMessageListScreenViewModelType) {
         self.init(style: .plain)
@@ -42,13 +45,19 @@ final class AmityMessageListTableViewController: UITableViewController {
 // MARK: - Setup View
 extension AmityMessageListTableViewController {
     func setupView() {
+        view.backgroundColor = .clear
         tableView.separatorInset.left = UIScreen.main.bounds.width
         tableView.tableFooterView = UIView()
         tableView.keyboardDismissMode = .onDrag
         tableView.estimatedRowHeight = 0
-        tableView.backgroundColor = AmityColorSet.backgroundColor
+        tableView.backgroundColor = .clear
         screenViewModel.dataSource.allCellNibs.forEach {
             tableView.register($0.value, forCellReuseIdentifier: $0.key)
+        }
+        if let viewModel = screenViewModel as? AmityMessageListScreenViewModel {
+            viewModel.onMessagesLoaded = { [weak self] in
+                self?.onMessagesLoaded?()
+            }
         }
         tableView.dataSource = self
         tableView.delegate = self
@@ -68,26 +77,25 @@ extension AmityMessageListTableViewController {
     
     func scrollToBottom(indexPath: IndexPath) {
         tableView.layoutIfNeeded()
-        tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
+        tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
     }
     
     func updateScrollPosition(to indexPath: IndexPath) {
-        
         let contentHeight = tableView.contentSize.height
         let contentYOffset = tableView.contentOffset.y
         let viewHeight = tableView.bounds.height
         
         Log.add("Content Height: \(contentHeight), Content Offset: \(contentYOffset), ViewHeight: \(viewHeight)")
         
+        tableView.layoutIfNeeded()
         // We update scroll position based on the view state. User can be in multiple view state.
         //
         // State 1:
         // All message fits inside the visible part of the view. We don't need to scoll
         if viewHeight >= contentHeight {
+            tableView.scrollToRow(at: indexPath, at: .bottom, animated: false)
             return
         }
-        
-        tableView.layoutIfNeeded()
         
         let pageThreshold = 2.25 // It means user scroll up more than 2 and a quarter of pages.
         if contentHeight - contentYOffset <= (viewHeight * pageThreshold) {
@@ -143,6 +151,10 @@ extension AmityMessageListTableViewController {
     }
 
     override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if isFirstLoad {
+            isFirstLoad = false
+            onMessagesLoaded?()
+        }
         guard let message = screenViewModel.dataSource.message(at: indexPath) else {
             return
         }

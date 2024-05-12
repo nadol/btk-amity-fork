@@ -6,6 +6,8 @@
 //  Copyright © 2563 Amity. All rights reserved.
 //
 
+import Photos
+import PhotosUI
 import UIKit
 import AmitySDK
 
@@ -40,7 +42,9 @@ public extension AmityMessageListViewController {
 
 /// Amity Message List
 public final class AmityMessageListViewController: AmityViewController {
-    
+
+    public var onMessagesLoaded: (() -> Void)?
+
     public weak var dataSource: AmityMessageListDataSource?
     
     // MARK: - IBOutlet Properties
@@ -53,7 +57,8 @@ public final class AmityMessageListViewController: AmityViewController {
     @IBOutlet weak var connectionStatusBarHeight: NSLayoutConstraint!
     
     // MARK: - Properties
-    private var screenViewModel: AmityMessageListScreenViewModelType!
+    private var chatUsers = [ChatUser]()
+    private var screenViewModel: AmityMessageListScreenViewModel!
     private var connectionStatatusObservation: NSKeyValueObservation?
     
     // MARK: - Container View
@@ -113,10 +118,12 @@ public final class AmityMessageListViewController: AmityViewController {
     public static func make(
         channelId: String,
         subChannelId: String,
-        settings: AmityMessageListViewController.Settings = .init()
+        settings: AmityMessageListViewController.Settings = .init(),
+        chatUsers: [ChatUser]
     ) -> AmityMessageListViewController {
         let viewModel = AmityMessageListScreenViewModel(channelId: channelId, subChannelId: subChannelId)
         let vc = AmityMessageListViewController(nibName: AmityMessageListViewController.identifier, bundle: AmityUIKitManager.bundle)
+        vc.chatUsers = chatUsers
         vc.screenViewModel = viewModel
         vc.settings = settings
         return vc
@@ -136,24 +143,17 @@ public final class AmityMessageListViewController: AmityViewController {
 private extension AmityMessageListViewController {
     
     func cameraTap() {
-        #warning("Redundancy: camera picker should be replaced with a singleton class")
         let cameraPicker = UIImagePickerController()
         cameraPicker.sourceType = .camera
         cameraPicker.delegate = self
-        displayCamera(cameraPicker: cameraPicker)
+        present(cameraPicker, animated: true)
     }
     
     func albumTap() {
-        let imagePicker = AmityImagePickerController(selectedAssets: [])
-        imagePicker.settings.theme.selectionStyle = .checked
-        imagePicker.settings.fetch.assets.supportedMediaTypes = [.image]
-        imagePicker.settings.selection.max = 20
-        imagePicker.settings.selection.unselectOnReachingMax = false
-        imagePicker.settings.theme.selectionStyle = .numbered
-        presentImagePicker(imagePicker, select: nil, deselect: nil, cancel: nil, finish: { [weak self] assets in
-            let medias = assets.map { AmityMedia(state: .localAsset($0), type: .image) }
-            self?.screenViewModel.action.send(withMedias: medias)
-        })
+        let imagePicker = UIImagePickerController()
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
     }
     
     func fileTap() {
@@ -169,28 +169,11 @@ private extension AmityMessageListViewController {
 private extension AmityMessageListViewController {
     
     func setupView() {
-        view.backgroundColor = AmityColorSet.backgroundColor
+        view.backgroundColor = .clear
         setRefreshOverlay(visible: false)
-        setupCustomNavigationBar()
         setupMessageContainer()
         setupComposeBarContainer()
         setupAudioRecordingView()
-    }
-    
-    func setupCustomNavigationBar() {
-        if settings.shouldShowChatSettingBarButton {
-            // Just using the view form this
-            navigationBarType = .custom
-            navigationHeaderViewController = AmityMessageListHeaderView(viewModel: screenViewModel)
-            let item = UIBarButtonItem(customView: navigationHeaderViewController)
-            navigationItem.leftBarButtonItem = item
-            let image = AmityIconSet.Chat.iconSetting
-            let barButton = UIBarButtonItem(image: image,
-                                            style: .plain,
-                                            target: self,
-                                            action: #selector(didTapSetting))
-            navigationItem.rightBarButtonItem = barButton
-        }
     }
     
     func setupConnectionStatusBar() {
@@ -273,6 +256,10 @@ private extension AmityMessageListViewController {
     
     func setupMessageContainer() {
         messageViewController = AmityMessageListTableViewController.make(viewModel: screenViewModel)
+        messageViewController?.onMessagesLoaded = { [weak self] in
+            self?.composeBarContainerView.isHidden = false
+            self?.onMessagesLoaded?()
+        }
         addContainerView(messageViewController, to: messageContainerView)
     }
     
@@ -286,12 +273,13 @@ private extension AmityMessageListViewController {
             composeBarViewController = AmityComposeBarOnlyTextViewController.make(viewModel: screenViewModel)
         }
         
+        composeBarContainerView.isHidden = true
         // Manage view controller
         addContainerView(composeBarViewController, to: composeBarContainerView)
         
         // Keep reference to the AmityComposeBar
         composeBar = composeBarViewController
-        
+
         composeBar.selectedMenuHandler = { [weak self] menu in
             self?.view.endEditing(true)
             switch menu {
@@ -351,9 +339,14 @@ private extension AmityMessageListViewController {
 extension AmityMessageListViewController: AmityKeyboardServiceDelegate {
     func keyboardWillChange(service: AmityKeyboardService, height: CGFloat, animationDuration: TimeInterval) {
         
-        let offset = height > 0 ? view.safeAreaInsets.bottom : 0
+        let offset: CGFloat
+        if let window =  (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first {
+            offset = height > 0 ? window.safeAreaInsets.bottom : 0
+        } else {
+            offset = 0.0
+        }
         bottomConstraint.constant = -height + offset
-        
+
         view.setNeedsUpdateConstraints()
         view.layoutIfNeeded()
         
@@ -429,7 +422,6 @@ extension AmityMessageListViewController: AmityMessageListScreenViewModelDelegat
     }
     
     func screenViewModelDidGetChannel(channel: AmityChannelModel) {
-        navigationHeaderViewController?.updateViews(channel: channel)
     }
     
     func screenViewModelScrollToBottom(for indexPath: IndexPath) {
@@ -575,4 +567,20 @@ extension AmityMessageListViewController: AmityMessageListScreenViewModelDelegat
         setRefreshOverlay(visible: isRefreshing)
     }
     
+}
+
+extension AmityMessageListViewController: PHPickerViewControllerDelegate {
+    
+    public func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        let identifiers = results.compactMap(\.assetIdentifier)
+        let fetchResult = PHAsset.fetchAssets(withLocalIdentifiers: identifiers, options: nil)
+        var assets = [PHAsset]()
+        fetchResult.enumerateObjects { asset, _, _ in
+            assets.append(asset)
+        }
+        let medias = assets.map { AmityMedia(state: .localAsset($0), type: .image) }
+        screenViewModel.action.send(withMedias: medias)
+
+        dismiss(animated: true)
+    }
 }
