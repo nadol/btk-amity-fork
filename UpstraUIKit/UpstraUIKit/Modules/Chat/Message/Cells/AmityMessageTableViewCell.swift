@@ -201,7 +201,10 @@ class AmityMessageTableViewCell: UITableViewCell, AmityMessageCellProtocol {
     
     private func setAvatarImage(_ messageModel: AmityMessageModel) {
         if let urlString = messageModel.object.user?.avatarCustomUrl {
-            avatarView.imageView.kf.setImage(with: URL(string: urlString))
+            avatarView.imageView.kf.setImage(
+                with: URL(string: urlString),
+                options: [.transition(.fade(0.25))]
+            )
         }
     }
 
