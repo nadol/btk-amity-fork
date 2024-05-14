@@ -650,6 +650,7 @@
 		E388C6B82BF0CB0D001E0B4E /* ChatUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = E388C6B72BF0CB0D001E0B4E /* ChatUser.swift */; };
 		E388C6BB2BF0D019001E0B4E /* ChatUserInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E388C6B92BF0D019001E0B4E /* ChatUserInfoView.swift */; };
 		E388C6BC2BF0D019001E0B4E /* ChatUserInfoDisplayData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E388C6BA2BF0D019001E0B4E /* ChatUserInfoDisplayData.swift */; };
+		E388C6C02BF3510F001E0B4E /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = E388C6BF2BF3510F001E0B4E /* Future.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1311,6 +1312,7 @@
 		E388C6B72BF0CB0D001E0B4E /* ChatUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatUser.swift; sourceTree = "<group>"; };
 		E388C6B92BF0D019001E0B4E /* ChatUserInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUserInfoView.swift; sourceTree = "<group>"; };
 		E388C6BA2BF0D019001E0B4E /* ChatUserInfoDisplayData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatUserInfoDisplayData.swift; sourceTree = "<group>"; };
+		E388C6BF2BF3510F001E0B4E /* Future.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Future.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2146,10 +2148,11 @@
 		72A3507D24EA820700DA9D46 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				97D0EBC226A14BB600E9FE6A /* UIPanGestureRecognizer+Extension.swift */,
+				72BD0710282D2BFD00178B22 /* Array+Extension.swift */,
 				724FBA8D2530141600EDC556 /* Data+Extension.swift */,
 				B77D392524FB5022004907CF /* Date+Extension.swift */,
 				72AFAC0E24F902AD00269019 /* Error+Extension.swift */,
+				E388C6BF2BF3510F001E0B4E /* Future.swift */,
 				B79EA6C3250A2D4700EC26B7 /* Int+Extension.swift */,
 				72D4B6E9253D6795006693E8 /* Notification+Extension.swift */,
 				B797ED0F24F6C3C500F3B411 /* NSMutableAttributedString+Extension.swift */,
@@ -2165,11 +2168,11 @@
 				723B6A80251B320E00EAE8D3 /* UIKit+Extension.swift */,
 				B7ED34512538BE23005E33A7 /* UILabel+Extension.swift */,
 				72A3508124EA820700DA9D46 /* UINavigationController+Extension.swift */,
+				97D0EBC226A14BB600E9FE6A /* UIPanGestureRecognizer+Extension.swift */,
 				72A3508424EA820700DA9D46 /* UITableView+Extension.swift */,
 				72A3507F24EA820700DA9D46 /* UIView+Extension.swift */,
 				72A3508224EA820700DA9D46 /* UIViewController+Extension.swift */,
 				A062145327004E9800037C34 /* UIViewController+PostCreateDialogue.swift */,
-				72BD0710282D2BFD00178B22 /* Array+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -4984,6 +4987,7 @@
 				0D43B16A25D82CBD00E6B604 /* AmityPostController.swift in Sources */,
 				B77DE3132537F1BA00568DF0 /* AmityCommunityMemberSettingsViewController.swift in Sources */,
 				72A3517C24EA820800DA9D46 /* CameraCollectionViewCell.swift in Sources */,
+				E388C6C02BF3510F001E0B4E /* Future.swift in Sources */,
 				78561A8225F9D86C00A1403E /* AmityPostReviewSettingsItem.swift in Sources */,
 				A0A903F126BFC2D0002949B2 /* PostGalleryFakeItemCell.swift in Sources */,
 				72A3518B24EA820800DA9D46 /* ZoomInteractionController.swift in Sources */,
