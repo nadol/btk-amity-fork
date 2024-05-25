@@ -739,7 +739,6 @@
 		6860B01A2ADE3D650042ED45 /* AmityPreviewLinkWizard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmityPreviewLinkWizard.swift; sourceTree = "<group>"; };
 		688F8613299E4085000FE6E7 /* SharedFrameworks */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SharedFrameworks; sourceTree = "<group>"; };
 		6895D9252975359000E377F1 /* AmityAsyncAwaitTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmityAsyncAwaitTransformer.swift; sourceTree = "<group>"; };
-		68EF84A529B077CF00C7EDEC /* RealmSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = RealmSwift.xcframework; path = Shared/RealmSwift.xcframework; sourceTree = "<group>"; };
 		68FEE2F62BC7A1050055FEC0 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		720D59992525BDB1009734EF /* DispatchGroupWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchGroupWrapper.swift; sourceTree = "<group>"; };
 		7211553C25505D180081CC23 /* AmityCategoryPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmityCategoryPickerViewController.swift; sourceTree = "<group>"; };
@@ -1126,7 +1125,6 @@
 		97E21E83264D244200F19CB3 /* AmityGroupChatEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmityGroupChatEditViewController.swift; sourceTree = "<group>"; };
 		97E21E84264D244200F19CB3 /* AmityGroupChatEditViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AmityGroupChatEditViewController.xib; sourceTree = "<group>"; };
 		97E21E8A264D266C00F19CB3 /* AmityGroupChatEditScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmityGroupChatEditScreenViewModel.swift; sourceTree = "<group>"; };
-		A052EAD42577A0FF00FF9312 /* Realm.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Realm.xcframework; path = Shared/Realm.xcframework; sourceTree = "<group>"; };
 		A062145327004E9800037C34 /* UIViewController+PostCreateDialogue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+PostCreateDialogue.swift"; sourceTree = "<group>"; };
 		A06214792709864100037C34 /* PostGalleryEmptyStateCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostGalleryEmptyStateCell.swift; sourceTree = "<group>"; };
 		A062147A2709864100037C34 /* PostGalleryEmptyStateCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PostGalleryEmptyStateCell.xib; sourceTree = "<group>"; };
@@ -1296,7 +1294,6 @@
 		D4373A4B25C09C980096D07D /* AmityPostSharePermission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmityPostSharePermission.swift; sourceTree = "<group>"; };
 		D441BEDF25C1469500C1EEB9 /* AmityFeedEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmityFeedEventHandler.swift; sourceTree = "<group>"; };
 		D441BEE925C16F1E00C1EEB9 /* AmityFeedUISettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmityFeedUISettings.swift; sourceTree = "<group>"; };
-		D45D459F26203D57008F7C2C /* AmitySDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AmitySDK.xcframework; path = Shared/AmitySDK.xcframework; sourceTree = "<group>"; };
 		D4869EB8276EACDD006BC9E8 /* AmityCommentCreatorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmityCommentCreatorViewController.swift; sourceTree = "<group>"; };
 		D4BA4E45261704A90022572F /* AmityCommunitySettingsCreateMenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AmityCommunitySettingsCreateMenuViewModel.swift; sourceTree = "<group>"; };
 		D4C0D50B25AEA8690061B6A6 /* AmityActivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmityActivityController.swift; sourceTree = "<group>"; };
@@ -1998,16 +1995,6 @@
 			path = "User Profile Editor";
 			sourceTree = "<group>";
 		};
-		72928FA524EA834A00BF566D /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				68EF84A529B077CF00C7EDEC /* RealmSwift.xcframework */,
-				D45D459F26203D57008F7C2C /* AmitySDK.xcframework */,
-				A052EAD42577A0FF00FF9312 /* Realm.xcframework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		72931CC424F8C2B7008D6DBD /* Tools */ = {
 			isa = PBXGroup;
 			children = (
@@ -2035,7 +2022,6 @@
 				72A3503224EA811500DA9D46 /* UpstraUIKit */,
 				72A3503D24EA811500DA9D46 /* UpstraUIKitTests */,
 				72A3503124EA811500DA9D46 /* Products */,
-				72928FA524EA834A00BF566D /* Frameworks */,
 				D4C821D72760E12200ED6728 /* Recovered References */,
 			);
 			sourceTree = "<group>";
