@@ -8,6 +8,10 @@
 
 import AmitySDK
 import AmityUIKit
+#if canImport(AmityUIKit4)
+import AmityUIKit4
+#endif
+import SwiftUI
 import UIKit
 
 class AppManager {
@@ -47,6 +51,15 @@ class AppManager {
         if let currentUserId = UserDefaults.standard.value(forKey: UserDefaultsKey.userId) as? String {
             register(withUserId: currentUserId)
         }
+        
+        // Share client to the new UIKit
+        #if canImport(AmityUIKit4)
+        AmityUIKit4Manager.setup(client: AmityUIKitManager.client)
+        
+        // override AmityViewStoryPageBehaviour
+        let customViewStoryPageBehaviour = CustomViewStoryPageBehaviour()
+        AmityUIKit4Manager.behaviour.viewStoryPageBehaviour = customViewStoryPageBehaviour
+        #endif
     }
     
     func register(withUserId userId: String) {
@@ -136,6 +149,26 @@ class AppManager {
         } else {
             return UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RegisterNavigationController")
         }
+
+//        var component = AmityCommentTrayComponent(referenceId: "65ba085a9e0c1cf2ee80cfcb", referenceType: .story)
+//        let hostController = SwiftUIHostingController(rootView: component)
+//        
+//        return hostController
     }
     
 }
+
+
+#if canImport(AmityUIKit4)
+class CustomViewStoryPageBehaviour: AmityViewStoryPageBehaviour {
+    
+    override func goToCommunityPage(context: AmityViewStoryPageBehaviour.Context) {
+        let viewController = AmityCommunityProfilePageViewController.make(withCommunityId: context.targetId)
+        if let navigationController = context.page.host.controller?.navigationController {
+            navigationController.navigationBar.isHidden = false
+            navigationController.pushViewController(viewController, animated: true)
+        }
+        
+    }
+}
+#endif
