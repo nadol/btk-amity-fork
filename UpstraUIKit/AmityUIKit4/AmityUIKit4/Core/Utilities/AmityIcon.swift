@@ -8,6 +8,7 @@
 import UIKit
 
 enum AmityIcon: String, ImageResourceProvider {
+    // MARK: Story
     case verifiedBadge = "verifiedBadge"
     case createStoryIcon = "createStoryIcon"
     case errorStoryIcon = "errorStoryIcon"
@@ -19,6 +20,7 @@ enum AmityIcon: String, ImageResourceProvider {
     case statusLoadingIcon = "statusLoadingIcon"
     case defaultCommunityAvatar = "defaultCommunityAvatar"
     case flagIcon = "flagIcon"
+    case unflagIcon = "unflagIcon"
     case lockIcon = "lockIcon"
     case lockBlackIcon = "lockBlackIcon"
     
@@ -68,6 +70,7 @@ enum AmityIcon: String, ImageResourceProvider {
     
     case emptyReaction = "emptyReactionIcon"
     
+    // MARK: Chat
     enum Chat: String, ImageResourceProvider {
         case sendMessage = "sendIconEnable"
         case closeReply = "grayCloseIcon"
@@ -91,6 +94,62 @@ enum AmityIcon: String, ImageResourceProvider {
         case unknownReaction = "reactionUnknown"
     }
     
+    // MARK: Social
+    case searchIcon = "searchIcon"
+    case plusIcon = "plusIcon"
+    case emptyNewsFeedIcon = "emptyNewsFeedIcon"
+    case exploreIcon = "exploreIcon"
+    case arrowIcon = "arrowIcon"
+    case likeActionIcon = "likeActionIcon"
+    case commentActionIcon = "commentActionIcon"
+    case shareActionIcon = "shareActionIcon"
+    case videoControlIcon = "videoControlIcon"
+    case circleCloseIcon = "circleCloseIcon"
+    case previewLinkDefaultIcon = "previewLinkDefaultIcon"
+    case previewLinkErrorIcon = "previewLinkErrorIcon"
+    case createPostMenuIcon = "createPostMenuIcon"
+    case createStoryMenuIcon = "createStoryMenuIcon"
+    case createPollMenuIcon = "createPollMenuIcon"
+    case createLivestreamMenuIcon = "createLivestreamMenuIcon"
+    case cameraAttatchmentIcon = "cameraAttatchmentIcon"
+    case photoAttatchmentIcon = "photoAttatchmentIcon"
+    case videoAttatchmentIcon = "videoAttatchmentIcon"
+    case attatchmentIcon = "attatchmentIcon"
+    case downArrowIcon = "downArrowIcon"
+    case noSearchableIcon = "noSearchableIcon"
+    case mediaUploadErrorIcon = "mediaUploadErrorIcon"
+    case starIcon = "starIcon"
+    case infoIcon = "infoIcon"
+    case adAvatarPlaceholder = "adAvatarPlaceholder"
+    case upArrowIcon = "upArrowIcon"
+    case communityProfilePlaceholder = "communityProfilePlaceholder"
+    case communityFeedIcon = "communityFeedIcon"
+    case communityPinIcon = "communityPinIcon"
+    case communityAnnouncementBadge = "communityAnnouncementBadge"
+    case communityPinBadge = "communityPinBadge"
+    case communityProfileEmptyPostIcon = "communityProfileEmptyPostIcon"
+    case communityPendingPostIcon = "communityPendingPostIcon"
+    case tickIcon = "tickIcon"
+    case communityCategoryPlaceholder = "categoriesPlaceholder"
+    case communityPlaceholder = "communityPlaceholder"
+    case communityThumbnail = "communityThumbnail"
+    case emptyStateExplore = "emptyStateExplore"
+    case communityNotFoundIcon = "communityNotFoundIcon"
+
+    case brandBadge = "brandBadgeIcon"
+    case globeIcon = "globeIcon"
+    case checkboxIcon = "checkBoxIcon"
+    case penIcon = "penIcon"
+    case memberIcon = "memberIcon"
+    case notificationIcon = "notificationIcon"
+    case postPermissionIcon = "postPermissionIcon"
+    case cameraIcon = "cameraIcon"
+    case communityMemberIcon = "communityMemberIcon"
+    case communityModeratorIcon = "communityModeratorIcon"
+    case postMenuIcon = "postMenuIcon"
+    case commentMenuIcon = "commentMenuIcon"
+    case emptyPendingPostIcon = "emptyPendingPostIcon"
+
     func getURL() -> URL {
         let path = AmityUIKit4Manager.bundle.path(forResource: self.rawValue, ofType: ".svg")
         return URL(fileURLWithPath: path ?? "")

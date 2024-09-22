@@ -34,7 +34,7 @@ class AppManager {
     func setupAmityUIKit() {
         // setup api key
         let endpointConfig = EndpointManager.shared.currentEndpointConfig
-        AmityUIKitManager.setup(apiKey: endpointConfig.apiKey, endpoint: AmityEndpoint(httpUrl: endpointConfig.httpEndpoint, rpcUrl: endpointConfig.socketEndpoint, mqttHost: endpointConfig.mqttEndpoint))
+        AmityUIKitManager.setup(apiKey: endpointConfig.apiKey, endpoint: AmityEndpoint(httpUrl: endpointConfig.httpEndpoint, rpcUrl: endpointConfig.socketEndpoint, mqttHost: endpointConfig.mqttEndpoint, uploadUrl: endpointConfig.uploadURL))
         
         // setup event handlers and page settings
         AmityUIKitManager.set(eventHandler: CustomEventHandler())
@@ -57,8 +57,11 @@ class AppManager {
         AmityUIKit4Manager.setup(client: AmityUIKitManager.client)
         
         // override AmityViewStoryPageBehaviour
-        let customViewStoryPageBehaviour = CustomViewStoryPageBehaviour()
-        AmityUIKit4Manager.behaviour.viewStoryPageBehaviour = customViewStoryPageBehaviour
+        let customPostContentComponenetBehaviour = CustomPostContentComponenetBehaviour()
+        AmityUIKit4Manager.behaviour.postContentComponentBehavior = customPostContentComponenetBehaviour
+        // override AmityViewStoryPageBehaviour
+        let customCommunityProfilePageBahavior = CustomAmityProfilePageBehaviour()
+        AmityUIKit4Manager.behaviour.communityProfilePageBehavior = customCommunityProfilePageBahavior
         #endif
     }
     
@@ -66,8 +69,10 @@ class AppManager {
         AmityUIKitManager.registerDevice(withUserId: userId, displayName: nil, sessionHandler: SampleSessionHandler()) { [weak self] success, error in
             print("[Sample App] register device with userId '\(userId)' \(success ? "successfully" : "failed")")
             if let error = error {
-                print("[Sample App] register device failed \(error.localizedDescription)")
+                AmityHUD.show(.error(message: "Could not register user: \(error.localizedDescription)"))
+                return
             }
+            
             self?.registerDevicePushNotification()
         }
         UserDefaults.standard.setValue(userId, forKey: UserDefaultsKey.userId)
@@ -83,13 +88,11 @@ class AppManager {
         
         AmityUIKitManager.registerDeviceForPushNotification(deviceToken) { success, error in
             if success {
-                AmityHUD.show(.success(message: "Success with id \(deviceToken)"))
+                AmityHUD.show(.success(message: "Successfully registered push notification for device \(deviceToken)"))
             } else {
-                AmityHUD.show(.error(message: "Failed with error \(error?.localizedDescription)"))
+                AmityHUD.show(.error(message: "Failed to register push notification. Error: \(error?.localizedDescription ?? "")"))
             }
-            
         }
-        
     }
     
     func unregister() {
@@ -160,15 +163,52 @@ class AppManager {
 
 
 #if canImport(AmityUIKit4)
-class CustomViewStoryPageBehaviour: AmityViewStoryPageBehaviour {
+
+class CustomPostContentComponenetBehaviour: AmityPostContentComponentBehavior {
     
-    override func goToCommunityPage(context: AmityViewStoryPageBehaviour.Context) {
-        let viewController = AmityCommunityProfilePageViewController.make(withCommunityId: context.targetId)
-        if let navigationController = context.page.host.controller?.navigationController {
-            navigationController.navigationBar.isHidden = false
+    override func goToUserProfilePage(context: AmityPostContentComponentBehavior.Context) {
+        let viewController = AmityUserProfilePageViewController.make(withUserId: context.component.post.postedUserId)
+        if let navigationController = context.component.host.controller?.navigationController {
+            navigationController.isNavigationBarHidden = false
             navigationController.pushViewController(viewController, animated: true)
         }
         
     }
+    
+}
+
+class CustomAmityProfilePageBehaviour: AmityCommunityProfilePageBehavior {
+//    override func goToCommunitySettingPage(context: AmityCommunityProfilePageBehavior.Context) {
+//        
+//        let communityId = context.page.communityId
+//        
+//        let viewController = AmityCommunitySettingsViewController.make(communityId: communityId)
+//        
+//        if let navigationController = context.page.host.controller?.navigationController {
+//            navigationController.isNavigationBarHidden = false
+//            navigationController.pushViewController(viewController, animated: true)
+//        }
+//    }
+    
+//    override func goToPendingPostPage(context: AmityCommunityProfilePageBehavior.Context) {
+//        let communityId = context.page.communityId
+//        
+//        let viewController = AmityPendingPostsViewController.make(communityId: communityId)
+//        
+//        if let navigationController = context.page.host.controller?.navigationController {
+//            navigationController.isNavigationBarHidden = false
+//            navigationController.pushViewController(viewController, animated: true)
+//        }
+//    }
+    
+//    override func goToMemberListPage(context: AmityCommunityProfilePageBehavior.Context, community: AmityCommunityModel?) {
+//        guard let community else { return }
+//        let viewController = AmityCommunityMemberSettingsViewController.make(community: community.object)
+//        
+//        if let navigationController = context.page.host.controller?.navigationController {
+//            navigationController.isNavigationBarHidden = false
+//            navigationController.pushViewController(viewController, animated: true)
+//        }
+//    }
 }
 #endif

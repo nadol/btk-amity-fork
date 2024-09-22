@@ -28,16 +28,21 @@ struct ReplyCommentView: View {
         // Reply Comments
         VStack {
             getViewReplyCommentButton(viewModel.parentComment)
-                .padding([.top, .bottom], 3)
+                .padding([.top, .bottom], 6)
                 .padding(.leading, 52)
                 .isHidden(hideViewReplyCommentButton)
             
             if let collection {
-                CommentListView(collection, isReply: true, hideCommentButtons: hideCommentButtons, commentButtonAction: commentButtonAction)
+                ReplyCommentListView(collection: collection,
+                                hideCommentButtons: hideCommentButtons,
+                                commentButtonAction: commentButtonAction)
+                                .padding(.top, 6)
+                
                 getViewMoreReplyCommentButton()
-                    .padding([.top, .bottom], 3)
+                    .padding([.top, .bottom], 6)
                     .padding(.leading, 52)
                     .isHidden(!collection.hasPrevious)
+                
             }
             
         }

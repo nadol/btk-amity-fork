@@ -15,13 +15,6 @@ protocol MentionTextEditorDelegate: AnyObject {
     func didUpdateAttributedText(text: NSAttributedString)
 }
 
-extension AmityMention: CustomStringConvertible {
-    
-    public var description: String {
-        return "Mention: \(self.userId ?? "") | Index: \(self.index) | Length: \(self.length)"
-    }
-}
-
 /// Highlights mentions in Text Editor
 class MentionTextEditor {
     

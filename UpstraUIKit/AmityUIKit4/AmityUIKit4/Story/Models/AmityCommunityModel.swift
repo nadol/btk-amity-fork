@@ -8,7 +8,12 @@
 import UIKit
 import AmitySDK
 
-struct AmityCommunityModel {
+public struct AmityCommunityModel: Identifiable {
+    
+    public var id: String {
+        return communityId
+    }
+    
     let communityId: String
     let description: String
     let displayName: String
@@ -23,13 +28,16 @@ struct AmityCommunityModel {
     let userId: String
     let tags: [String]
     let category: String
+    let categories: [String]
     var categoryId: String?
     let avatarURL: String
+    let largeAvatarURL: String
     let isPostReviewEnabled: Bool
     let isStoryCommentsAllowed: Bool
     let participation: AmityCommunityMembership
+    let isBrand: Bool
     
-    var object: AmityCommunity
+    public var object: AmityCommunity
     
     init(object: AmityCommunity) {
         self.object = object
@@ -47,11 +55,14 @@ struct AmityCommunityModel {
         self.userId = object.userId
         self.tags = object.tags ?? []
         self.category = object.categories.first?.name ?? AmityLocalizedStringSet.General.anonymous.localizedString
+        self.categories = object.categories.map { $0.name }
         self.categoryId = object.categoryIds.first
         self.avatarURL = object.avatar?.fileURL ?? ""
+        self.largeAvatarURL = object.avatar?.largeFileURL ?? ""
         self.participation = object.membership
         self.isPostReviewEnabled = object.isPostReviewEnabled
         self.isStoryCommentsAllowed = object.storySettings.allowComment
+        self.isBrand = object.user?.isBrand ?? false
     }
     
     /// Returns pending post count.
@@ -67,5 +78,12 @@ struct AmityCommunityModel {
     /// Returns declined post count.
     var declinedPostCount: Int {
         return object.getPostCount(feedType: .declined)
+    }
+    
+    var hasModeratorRole: Bool {
+        if let communityMember = object.membership.getMember(withId: AmityUIKitManagerInternal.shared.currentUserId) {
+            return communityMember.hasModeratorRole
+        }
+        return false
     }
 }

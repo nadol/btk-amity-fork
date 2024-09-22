@@ -107,6 +107,10 @@ public final class AmityUIKit4Manager {
         AmityUIKitManagerInternal.shared.env = env
     }
     
+    public static func didUpdateClient() {
+        AmityUIKitManagerInternal.shared.didUpdateClient()
+    }
+    
     // MARK: - Variable
     
     /// Public instance of `AmityClient` from `AmitySDK`. If you are using both`AmitySDK` & `AmityUIKit` in a same project, we recommend to have only one instance of `AmityClient`. You can use this instance instead.
@@ -200,9 +204,81 @@ final class AmityUIKitManagerInternal: NSObject {
         let viewStoryPageBehaviour = AmityViewStoryPageBehaviour()
         behavior.viewStoryPageBehaviour = viewStoryPageBehaviour
         
-        // TargetSelectionPage
-        let targetSelectionPageBehaviour = AmityTargetSelectionPageBehaviour()
-        behavior.targetSelectionPageBehaviour = targetSelectionPageBehaviour
+        // StoryTargetSelectionPage
+        let storyTargetSelectionPageBehaviour = AmityStoryTargetSelectionPageBehaviour()
+        behavior.storyTargetSelectionPageBehaviour = storyTargetSelectionPageBehaviour
+        
+        // SocialHomePage
+        let socialHomePageBehavior = AmitySocialHomePageBehavior()
+        behavior.socialHomePageBehavior = socialHomePageBehavior
+        
+        // SocialHomeTopNavigationComponent
+        let socialHomeTopNavigationComponentBehavior = AmitySocialHomeTopNavigationComponentBehavior()
+        behavior.socialHomeTopNavigationComponentBehavior = socialHomeTopNavigationComponentBehavior
+        
+        // MyCommunitiesComponentBehavior
+        let myCommunitiesComponentBehavior = AmityMyCommunitiesComponentBehavior()
+        behavior.myCommunitiesComponentBehavior = myCommunitiesComponentBehavior
+        
+        // NewsFeedComponent
+        let newsFeedComponentBehavior = AmityNewsFeedComponentBehavior()
+        behavior.newsFeedComponentBehavior = newsFeedComponentBehavior
+        
+        // GlobalFeedComponent
+        let globalFeedComponentBehavior = AmityGlobalFeedComponentBehavior()
+        behavior.globalFeedComponentBehavior = globalFeedComponentBehavior
+        
+        // CreatePostMenuComponent
+        let createPostMenuComponentBehavior = AmityCreatePostMenuComponentBehavior()
+        behavior.createPostMenuComponentBehavior = createPostMenuComponentBehavior
+        
+        // PostTargetSelectionPage
+        let postTargetSelectionPageBehavior = AmityPostTargetSelectionPageBehavior()
+        behavior.postTargetSelectionPageBehavior = postTargetSelectionPageBehavior
+        
+        // PostDetailPage
+        let postDetailPageBehavior = AmityPostDetailPageBehavior()
+        behavior.postDetailPageBehavior = postDetailPageBehavior
+        
+        // SocialGlobalSearchPage
+        let socialGlobalSearchPageBehavior = AmitySocialGlobalSearchPageBehavior()
+        behavior.socialGlobalSearchPageBehavior = socialGlobalSearchPageBehavior
+        
+        // MyCommunitiesSearchPage
+        let myCommunitiesSearchPageBehavior = AmityMyCommunitiesSearchPageBehavior()
+        behavior.myCommunitiesSearchPageBehavior = myCommunitiesSearchPageBehavior
+        
+        // CommunitySearchResultComponent
+        let communitySearchResultComponentBehavior = AmityCommunitySearchResultComponentBehavior()
+        behavior.communitySearchResultComponentBehavior = communitySearchResultComponentBehavior
+        
+        // UserSearchResultComponentBehavior
+        let userSearchResultComponentBehavior = AmityUserSearchResultComponentBehavior()
+        behavior.userSearchResultComponentBehavior = userSearchResultComponentBehavior
+        
+        // PostComposerPage
+        let postComposerPageBehavior = AmityPostComposerPageBehavior()
+        behavior.postComposerPageBehavior = postComposerPageBehavior
+        
+        // CommunityProfilePage
+        let communityProfilePageBehavior = AmityCommunityProfilePageBehavior()
+        behavior.communityProfilePageBehavior = communityProfilePageBehavior
+        
+        // CommunitySetupPage
+        let communitySetupPageBehavior = AmityCommunitySetupPageBehavior()
+        behavior.communitySetupPageBehavior = communitySetupPageBehavior
+        
+        // CommunityMembershipPage
+        let communityMembershipPageBehavior = AmityCommunityMembershipPageBehavior()
+        behavior.communityMembershipPageBehavior = communityMembershipPageBehavior
+        
+        // CommunitySettingPage
+        let communitySettingPageBehavior = AmityCommunitySettingPageBehavior()
+        behavior.communitySettingPageBehavior = communitySettingPageBehavior
+        
+        // CommunityNotificaitonSettingPage
+        let communityNotificationSettingPageBehavior = AmityCommunityNotificationSettingPageBehavior()
+        behavior.communityNotificationSettingPageBehavior = communityNotificationSettingPageBehavior
     }
     
     func registerDevice(_ userId: String,
@@ -279,10 +355,24 @@ final class AmityUIKitManagerInternal: NSObject {
             
     }
     
-    private func didUpdateClient() {
+    func didUpdateClient() {
         // Update file repository to use in file service.
         fileService.fileRepository = AmityFileRepository(client: client)
         messageMediaService.fileRepository = AmityFileRepository(client: client)
+        
+        let accessToken = self.client.accessToken ?? ""
+        let authenticatedRequest = AnyModifier { request in
+            var r = request
+            r.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+            return r
+        }
+        
+        KingfisherManager.shared.defaultOptions = [
+            .requestModifier(authenticatedRequest)
+        ]
+        
+        // Initialize AdEngine so that we can start fetching ad settings here
+        let _ = AdEngine.shared
     }
     
 }

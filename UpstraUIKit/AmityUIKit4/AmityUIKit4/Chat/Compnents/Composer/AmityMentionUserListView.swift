@@ -36,7 +36,6 @@ struct AmityMentionUserListView: View {
             }
         }
         .frame(height: listHeight)
-        .background(Color(viewConfig.theme.baseColorShade4))
     }
     
     struct Configuration: UIKitConfigurable {
@@ -75,6 +74,14 @@ struct AmityMentionUserItemView: View {
                     .padding(.leading, 8)
                     .foregroundColor(Color(viewConfig.theme.baseColor))
                     .accessibilityIdentifier(AccessibilityID.Chat.MentionList.userDisplayName)
+                
+                if user.isBrand {
+                    Image(AmityIcon.brandBadge.imageResource)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 18, height: 18)
+                        .padding(.leading, 4)
+                }
                 
                 Spacer()
                 

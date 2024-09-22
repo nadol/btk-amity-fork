@@ -2,7 +2,7 @@
 //  ChatUser.swift
 //  AmityUIKit
 //
-//  Created by Mateusz Nadolski on 12/05/2024.
+//  Created by Mateusz Nadolski on 22/09/2024.
 //  Copyright © 2024 Amity. All rights reserved.
 //
 

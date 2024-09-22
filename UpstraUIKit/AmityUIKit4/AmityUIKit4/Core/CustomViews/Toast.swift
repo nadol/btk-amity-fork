@@ -17,6 +17,7 @@ public enum ToastStyle {
 
 public struct ToastView: View {
     @State private var rotatingDegree = 0.0
+    static let toastViewTag: Int = 101010
     
     var message: String
     var style: ToastStyle
@@ -100,13 +101,14 @@ struct ToastModifier: ViewModifier {
     }
 }
 
+/// To use with SwiftUI way
 extension View {
     public func showToast(isPresented: Binding<Bool>, style: ToastStyle, message: String, bottomPadding: CGFloat = 60) -> some View {
         self.modifier(ToastModifier(showToast: isPresented, message: message, style: style, bottomPadding: bottomPadding))
     }
 }
 
-
+/// To use with UIKit way
 public class Toast: UIViewController {
 
     @IBOutlet weak var content: UIView!
@@ -139,26 +141,46 @@ public class Toast: UIViewController {
         hostingController.didMove(toParent: self)
     }
     
-    static func makeView(style: ToastStyle, message: String) -> UIView {
+    private static func makeView(style: ToastStyle, message: String) -> UIView {
         let vc = Toast(nibName: String(describing: self), bundle: AmityUIKit4Manager.bundle)
         vc.message = message
         vc.style = style
         return vc.view
     }
     
-    public static func showToast(style: ToastStyle, message: String, bottomPadding: CGFloat = 0.0) {
+    public static func showToast(style: ToastStyle, message: String, bottomPadding: CGFloat = 30, autoHide: Bool = true) {
         let keyWindow = UIApplication.shared.connectedScenes.flatMap { ($0 as? UIWindowScene)?.windows ?? [] }.first { $0.isKeyWindow }
         guard let window = keyWindow else { return }
         
+        let safeAreaPadding = window.safeAreaInsets.bottom
+        let padding = safeAreaPadding > bottomPadding ? safeAreaPadding + 10 : bottomPadding
+        
         let toastView = Toast.makeView(style: style, message: message)
-        toastView.frame = CGRect(x: 0, y: CGFloat(UIScreen.main.bounds.height - ((70 + bottomPadding) * UIScreen.main.scale)), width: UIScreen.main.bounds.width, height: toastView.frame.height)
+        toastView.tag = ToastView.toastViewTag
+        toastView.frame = CGRect(x: 0, y: CGFloat(UIScreen.main.bounds.height - ((padding) * UIScreen.main.scale)), width: UIScreen.main.bounds.width, height: toastView.frame.height)
         toastView.alpha = 0.0
         
+        hideToastIfPresented()
         window.addSubview(toastView)
         
         UIView.animate(withDuration: 0.5, delay: 0.0, options: .curveEaseInOut, animations: {
             toastView.alpha = 1.0
         }) { _ in
+            if autoHide {
+                UIView.animate(withDuration: 0.5, delay: 3.0, options: .curveEaseInOut, animations: {
+                    toastView.alpha = 0.0
+                }, completion: { _ in
+                    toastView.removeFromSuperview()
+                })
+            }
+        }
+    }
+    
+    public static func hideToastIfPresented() {
+        let keyWindow = UIApplication.shared.connectedScenes.flatMap { ($0 as? UIWindowScene)?.windows ?? [] }.first { $0.isKeyWindow }
+        guard let window = keyWindow else { return }
+        
+        if let toastView = window.subviews.first(where: { $0.tag == ToastView.toastViewTag }) {
             UIView.animate(withDuration: 0.5, delay: 3.0, options: .curveEaseInOut, animations: {
                 toastView.alpha = 0.0
             }, completion: { _ in

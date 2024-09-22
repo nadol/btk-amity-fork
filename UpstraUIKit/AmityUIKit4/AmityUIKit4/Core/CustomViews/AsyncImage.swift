@@ -9,11 +9,11 @@ import SwiftUI
 import UIKit
 
 struct AsyncImage: View {
-    let placeholder: ImageResource
+    let placeholder: ImageResource?
     let url: URL?
     let contentMode: ContentMode
     
-    init(placeholder: ImageResource, url: URL?, contentMode: ContentMode = .fill) {
+    init(placeholder: ImageResource? = nil, url: URL?, contentMode: ContentMode = .fill) {
         self.placeholder = placeholder
         self.url = url
         self.contentMode = contentMode
@@ -21,24 +21,20 @@ struct AsyncImage: View {
     
     var body: some View {
         GeometryReader { proxy in
-            Image(placeholder)
+            KFImage.url(url)
+                .placeholder {
+                    if let placeholder {
+                        Image(placeholder)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    }
+                }
                 .resizable()
+                .loadDiskFileSynchronously()
+                .startLoadingBeforeViewAppear()
                 .modifier(ImageScaleMode(mode: contentMode))
                 .frame(width: proxy.size.width, height: proxy.size.height)
                 .clipped()
-                .overlay(
-                    VStack {
-                        if let url {
-                            URLImage(url, content: { image in
-                                image
-                                    .resizable()
-                                    .modifier(ImageScaleMode(mode: contentMode))
-                                    .frame(width: proxy.size.width, height: proxy.size.height)
-                                    .clipped()
-                            })
-                        }
-                    }
-                )
         }
     }
 }
@@ -55,7 +51,7 @@ struct ImageScaleMode: ViewModifier {
             content
                 .scaledToFill()
                 .clipped()
-                .clipShape(Circle())
+//                .clipShape(Circle())
         }
     }
 }

@@ -19,7 +19,8 @@ class MentionListProvider {
     
     // Repositories
     private var userRepository: AmityUserRepository = AmityUserRepository(client: AmityUIKitManagerInternal.shared.client)
-    private var channelMembersRepository: AmityChannelMembership?
+    private var channelMembersRepo: AmityChannelMembership?
+    private var communityMembersRepo: AmityCommunityMembership?
     private var communityRepository: AmityCommunityRepository = AmityCommunityRepository(client: AmityUIKitManagerInternal.shared.client)
     
     // Collection
@@ -51,7 +52,7 @@ class MentionListProvider {
             }
         case .message(let subChannelId):
             if let channelId = subChannelId {
-                channelMembersRepository = AmityChannelMembership(client: client, andChannel: channelId)
+                channelMembersRepo = AmityChannelMembership(client: client, andChannel: channelId)
             }
         }
         
@@ -116,6 +117,7 @@ class MentionListProvider {
     }
     
     private func setupCommunity(withId communityId: String) {
+        communityMembersRepo = AmityCommunityMembership(client: AmityUIKitManagerInternal.shared.client, andCommunityId: communityId)
         communityToken = communityRepository.getCommunity(withId: communityId).observe { [weak self] liveObject, error in
             if liveObject.dataStatus == .fresh {
                 self?.communityToken?.invalidate()
@@ -135,7 +137,7 @@ class MentionListProvider {
         mentionListToken = nil
         mentionListToken?.invalidate()
         
-        channelMembersCollection = channelMembersRepository?.searchMembers(displayName: displayName, filterBuilder: builder, roles: [])
+        channelMembersCollection = channelMembersRepo?.searchMembers(displayName: displayName, filterBuilder: builder, roles: [], includeDeleted: false)
         mentionListToken = channelMembersCollection?.observe({ [weak self] liveCollection, _, error in
             self?.handleSearchResponse(with: liveCollection)
         })
@@ -155,7 +157,7 @@ class MentionListProvider {
         mentionListToken = nil
         mentionListToken?.invalidate()
         
-        communityMembersCollection = communityRepository.searchMembers(communityId: communityId, displayName: displayName, membership: .member, roles: [], sortBy: .lastCreated)
+        communityMembersCollection = communityMembersRepo?.searchMembers(keyword: displayName, filter: [.member], roles: [], sortBy: .lastCreated, includeDeleted: false)
         mentionListToken = communityMembersCollection?.observe { [weak self] liveCollection, _, error in
             self?.handleSearchResponse(with: liveCollection)
         }
